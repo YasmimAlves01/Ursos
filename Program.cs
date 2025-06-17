@@ -1,35 +1,9 @@
-﻿// Console.WriteLine("Bem-Vindo ao sistema internacional de armazenamento de dado de urso");
-
-// while (true)
-// {
-//     Console.WriteLine("Quantos ursos você ira cadastrar?");
-//     int ursos = int.Parse(Console.ReadLine()!);
-//     int[] peso = new int[ursos];
-//     string[] sexoUrso = new string[ursos];
-//     Console.WriteLine("Por favor digite o peso dos ursos um a um: ");
-//     for (int i = 0; i < ursos; i++)
-//     {
-//         peso[i] = Convert.ToInt32(Console.ReadLine()!);
-//         for (int j = 0; j < ursos; j++)
-//         {
-//             Console.WriteLine("Por favor digite o sexo do Urso");
-//             Console.WriteLine("Onde F é igual a Feminino e M é igual a Masculino:");
-//             sexoUrso[j] = Console.ReadLine()!;
-//         }
-//     }
-//     Console.WriteLine($"O peso dos ursos são {peso.Length}");
-//     Console.WriteLine($"O sexo dos ursos são {sexoUrso.Length}");
-//     Console.WriteLine("Encerra");
-//     break;
-// }
-
-using System.Text.RegularExpressions; //lib da list
-
-Console.Clear();
+﻿Console.Clear();
 Console.WriteLine("Bem-Vindo(a) ao sistema internacional de armazenamento de dados de ursos selvagens!\n");
 
-double maiorPeso = 0;
-char sexoMaiorPeso = ' ';
+int contM = 0, contF = 0; // variaveis de contagem de ursos dos dois sexos
+double maiorPeso = 0, somaM = 0, somaF = 0;  // variaveis de contagem do urso com maior peso, e a quantidade dos ursos dos dois sexos
+char sexoMaiorPeso = ' '; //char do maior peso inicia como vazio e é substituido com o char do sexo do urso com maior peso
 
 string[] categoria = { "ML", "L", "M", "P", "MP" }; // array de categoria de pesos
 
@@ -45,46 +19,77 @@ string[] categoria = { "ML", "L", "M", "P", "MP" }; // array de categoria de pes
 List<(double peso, char sexo)> ursos = new(); // funçao nova, cria uma lista (ao que eu entendi é tipo um array) que armazena duas variaveis, peso e sexo e o nome é ursos
 
 while (true)
-{
+{ // = a true obriga a cair nno while
     Console.Write("Por favor, Informe o peso do urso (Kg):");
     if (!double.TryParse(Console.ReadLine(), out double peso)) continue; // função nova, se cair na condição ele quebra o loop e volta pro inicio
 
-    if (peso <= 0)
+    if (peso <= 0 || peso > 250) // se o urso inserido tiver peso igual a 0, maior que 250ou peso negativo, cai no break e nao executa o while
         break;
 
-    if (peso > 250)
-    {
-        break;
-    }
-
-    char sexo;
+    char sexo; //cria a variavel sexo como um char
     while (true)
-    {
+    { //caso o codigo nao caia no break ele obriga a cair no while
         Console.Write("Por favor, Informe o sexo(F/M) do urso: ");
-        string teste = Console.ReadLine()!.ToUpper().Trim();
-        if (teste == "M" || teste == "F")
-        {
-            sexo = teste[0];
-            break;
+        string sexoDigitado = Console.ReadLine()!.ToUpper().Trim(); // cria uma varivael do tipo string
+        if (sexoDigitado == "M" || sexoDigitado == "F")
+        { //se sexo for igual a m ou f ele pega o indice 0 da string, que a primeira letra e adiciona a varivel do tipo char
+            sexo = sexoDigitado[0];
+            break; //cai no brak e volta pro while de cima
         }
-        Console.WriteLine("Sexo inválido");
+        Console.WriteLine("Sexo inválido");//caso o sexo nao seja nenhuma das alternativas, ele apararece a mensagem de sexo invalido e pede pro usuario digitar dnv
     }
 
-    ursos.Add((peso, sexo));
+    ursos.Add((peso, sexo)); // caso passe pelo dois whiles, adiciona na lista com peso e sexo
 
+    //ele pega o valor do peso digitado, compara para ver o valor atual do maior peso, se for maior ele substitui o peso e o sexo do urso
     if (peso > maiorPeso)
     {
         maiorPeso = peso;
         sexoMaiorPeso = sexo;
     }
 
+    // pega os ursos de sexo = M e calcula que a soma de pesos masculino é igual ao valor da somma de pesos masculinos atual + o peso digitado e acrescenta urso do sexo M
+    if (sexo == 'M')
+    {
+        somaM += peso;
+        contM++;
+    }
+
+    //se nao for do sexo = M, calcula que a soma de pesos feminino é igual ao valor da soma de pesos feminino atual + o peso digitado e acrescenta urso do sexo F
+    else
+    {
+        somaF += peso;
+        contF++;
+    }
+
     string cat = saberCategoria(peso, intervalosPeso, categoria);
     Console.WriteLine($"\nUrso registrado - Peso: {peso} Kg | Sexo: {sexo} | Categoria: {cat} \n");
 }
 
-Console.WriteLine("\nInformações do urso mais pesado:");
-Console.WriteLine($"Sexo: {sexoMaiorPeso}");
-Console.WriteLine($"Peso: {maiorPeso}Kg");
+Console.Clear();
+
+Console.WriteLine($"\nTotal de Ursos Registrados: {ursos.Count}\n");
+
+Console.WriteLine("Informações do urso mais pesado:");
+Console.Write($"Sexo: {sexoMaiorPeso} | ");
+Console.Write($"Peso: {maiorPeso}Kg\n");
+
+Console.WriteLine("\nMédia de peso por sexo:");
+
+if (contM > 0){
+    double mediaM = somaM / contM;
+    Console.Write($"Machos: {mediaM:F2} kg | ");
+}else{
+    Console.Write("Machos: Não possui registros  | ");
+}
+
+if (contF > 0){
+    double mediaF = somaF / contF;
+    Console.Write($"Fêmeas: {mediaF:F2} kg");
+}else{
+    Console.Write("Fêmeas: Não possui registros");
+}
+
 
 string saberCategoria(double peso, (int min, int max)[] intervalos, string[] categorias)
 {
@@ -97,10 +102,3 @@ string saberCategoria(double peso, (int min, int max)[] intervalos, string[] cat
     }
     return "Sem Categoria";
 }
-
-
-// foreach (var urso in ursos)
-// {
-//     string categoriaUrso = saberCategoria(urso.peso, intervalosPeso, categoria);
-//     Console.WriteLine($"Peso: {urso.peso} kg | Sexo: {urso.sexo} | Categoria: {categoriaUrso}");
-// }

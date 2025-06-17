@@ -9,10 +9,13 @@ Acesse o programa atraves do [LINK]()
 ## Passo a passo
 
 ### Primeiro você recebe boas vindas ao programa e é solicitado que insira o peso do urso(em Kg):
-![](img/IMAGE0001.png)
+![](img/IMAGE01.png)
 
 ### Logo após de informar o peso, é solicitado que insida o sexo do urso(F/M):
-![](img/IMAGE0002.jpg)
+![](img/IMAGE02.png)
 
-### Depois de inserir as informações necessárias, aparece que o urso foi registrado e as informações dele como: peso, sexo, categoria 
-![](img/IMAGE0003.jpg)
+### Depois de inserir as informações necessárias, aparece que o urso foi registrado e as informações dele como: peso, sexo, categoria.
+![](img/IMAGE03.png)
+
+### Caso você digite no peso: 0Kg, 250Kg ou algum valor negativo para Kg, ele encerra o programa e mostra as seguintes informações:
+![](img/IMAGE04.png)
