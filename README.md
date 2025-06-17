@@ -1,21 +1,21 @@
-# Projeto para coleta de dados de ursos selvagens
+# Projeto para Coleta de Dados de Ursos Selvagens
 
-## Sobre
-Um programa para análise de dados coletados de ursos selvagens.  Para cada urso, receba o peso (kg) e o sexo (M/F). Finalize a coleta ao receber um peso zero, negativo ou acima de 250kg.
+## Sobre  
+Um programa para análise de dados coletados de ursos selvagens. Para cada urso, receba o peso (kg) e o sexo (M/F). Finalize a coleta ao receber um peso igual a zero, negativo ou acima de 250 kg.
 
-## Download
-Acesse o programa atraves do [LINK](/publish.rar)
+## Download  
+Acesse o programa através do [LINK]()
 
-## Passo a passo
+## Passo a Passo
 
-### Primeiro você recebe boas vindas ao programa e é solicitado que insira o peso do urso(em Kg):
-![](img/IMAGE01.png)
+### Primeiro, você recebe as boas-vindas ao programa e é solicitado a inserir o peso do urso (em kg):  
+![Imagem 1](img/IMAGE01.png)
 
-### Logo após de informar o peso, é solicitado que insida o sexo do urso(F/M):
-![](img/IMAGE02.png)
+### Logo após informar o peso, é solicitado que insira o sexo do urso (F/M):  
+![Imagem 2](img/IMAGE02.png)
 
-### Depois de inserir as informações necessárias, aparece que o urso foi registrado e as informações dele como: peso, sexo, categoria.
-![](img/IMAGE03.png)
+### Depois de inserir as informações necessárias, o programa mostra que o urso foi registrado, exibindo seus dados: peso, sexo e categoria.  
+![Imagem 3](img/IMAGE03.png)
 
-### Caso você digite no peso: 0Kg, 250Kg ou algum valor negativo para Kg, ele encerra o programa e mostra as seguintes informações:
-![](img/IMAGE04.png)
+### Caso você digite um peso igual a 0 kg, 250 kg ou um valor negativo, o programa é encerrado e exibe as seguintes informações:  
+![Imagem 4](img/IMAGE04.png)
