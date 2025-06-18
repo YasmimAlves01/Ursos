@@ -1,4 +1,6 @@
-﻿Console.Clear();
+﻿using System.Runtime.CompilerServices;
+
+Console.Clear();
 Console.WriteLine("Bem-Vindo(a) ao sistema internacional de armazenamento de dados de ursos selvagens!\n");
 
 int contM = 0, contF = 0; // variaveis de contagem de ursos dos dois sexos
@@ -7,7 +9,7 @@ char sexoMaiorPeso = ' '; //char do maior peso inicia como vazio e é substituid
 
 string[] categoria = { "ML", "L", "M", "P", "MP" }; // array de categoria de pesos
 
-(int PesoMinimo, int PesoMaximo)[] intervalosPeso = {  
+(int PesoMinimo, int PesoMaximo)[] intervalosPeso = {
     (1, 50),
     (51, 100),
     (101, 150),
@@ -76,17 +78,23 @@ Console.Write($"Peso: {maiorPeso}Kg\n");
 
 Console.WriteLine("\nMédia de peso por sexo:");
 
-if (contM > 0){
+if (contM > 0)
+{
     double mediaM = somaM / contM;
     Console.Write($"Machos: {mediaM:F2} kg | ");
-}else{
+}
+else
+{
     Console.Write("Machos: Não possui registros  | ");
 }
 
-if (contF > 0){
+if (contF > 0)
+{
     double mediaF = somaF / contF;
     Console.Write($"Fêmeas: {mediaF:F2} kg");
-}else{
+}
+else
+{
     Console.Write("Fêmeas: Não possui registros");
 }
 
@@ -102,3 +110,36 @@ string saberCategoria(double peso, (int min, int max)[] intervalos, string[] cat
     }
     return "Sem Categoria";
 }
+
+//Elemento para cada categoria, em forma de arrays
+int[] machos = new int[categoria.Length];
+int[] femeas = new int[categoria.Length];
+int[] total = new int[categoria.Length];
+
+foreach (var urso in ursos)
+{
+    for (int i = 0; i < intervalosPeso.Length; i++)
+    {
+        if (urso.peso >= intervalosPeso[i].PesoMinimo && urso.peso <= intervalosPeso[i].PesoMaximo)
+        {
+            total[i]++;
+            if (urso.sexo == 'M')
+                machos[i]++;
+            else
+                femeas[i]++;
+            break;
+
+        }
+    }
+}
+void histograma(string titulo, int[] dados)
+{
+    Console.WriteLine($"\n--- {titulo} ---");
+    Console.WriteLine("    +...10...20...30...40...50...60...70...80...90..100");
+    for (int i = 0; i < categoria.Length; i++)
+        //neste caso o -4 está ocupando no mínimo 4 4espaços, alinhado a esquerda.
+        Console.WriteLine($"{categoria[i],-4}|{new string('*', dados[i])}");
+}
+histograma("Ursos Machos", machos);
+histograma("Ursos Fêmeas", femeas);
+histograma("Ursos (todos)", total);
