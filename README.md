@@ -19,3 +19,7 @@ Acesse o programa através do [LINK]()
 
 ### Caso você digite um peso igual a 0 kg, 250 kg ou um valor negativo, o programa é encerrado e exibe as seguintes informações:  
 ![Imagem 4](img/IMAGE04.png)
+
+### Após inserir os pesos e suas respectivas classificações (Macho ou Fêmea), o programa gera um Histograma mostrando as informações:  
+![Imagem 5](img/IMAGE05.png)
+
