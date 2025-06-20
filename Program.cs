@@ -57,30 +57,30 @@ while (true)
         contF++;
     }
 
-    string cat = saberCategoria(peso, intervalosPeso, categoria);
-    Console.WriteLine($"\nUrso registrado - Peso: {peso} Kg | Sexo: {sexo} | Categoria: {cat} \n");
+    string cat = saberCategoria(peso, intervalosPeso, categoria); //usando a função de saber categoria para mostrar a categoria do urso inserido
+    Console.WriteLine($"\nUrso registrado - Peso: {peso} Kg | Sexo: {sexo} | Categoria: {cat} \n"); //mostrando as informações do urso registrado
 }
 
 Console.Clear();
 
-Console.WriteLine($"\nTotal de Ursos Registrados: {ursos.Count}\n");
+Console.WriteLine($"\nTotal de Ursos Registrados: {ursos.Count}\n");//conta o total de indices dentro da lista e mostra a quantidade de ursos registrados
 
 Console.WriteLine("Informações do urso mais pesado:");
-Console.Write($"Sexo: {sexoMaiorPeso} | ");
-Console.Write($"Peso: {maiorPeso}Kg\n");
+Console.Write($"Sexo: {sexoMaiorPeso} | ");//mostra o sexo do urso mais pesado registrado
+Console.Write($"Peso: {maiorPeso}Kg\n");//mostra o peso do urso mais pesado registrado
 
 Console.WriteLine("\nMédia de peso por sexo:");
 
-if (contM > 0){
-    Console.Write($"Machos: {(somaM / contM):F2} kg | ");
+if (contM > 0){ //se tiver mais de um urso macho registrado ele faz a média
+    Console.Write($"Machos: {(somaM / contM):F2} kg | "); //pega a soma de todos os pesos e divide pela quantidade de ursos
 }else{
-    Console.Write("Machos: Não possui registros  | ");
+    Console.Write("Machos: Não possui registros  | "); // se nao tiver urso macho, ele mostra a mensagem que nao possui registro
 }
 
-if (contF > 0){
-    Console.WriteLine($"Fêmeas: {(somaF / contF):F2} kg\n");
+if (contF > 0){ //se tiver mais de um urso femea registrado ele faz a média
+    Console.WriteLine($"Fêmeas: {(somaF / contF):F2} kg\n"); //pega a soma de todos os pesos e divide pela quantidade de ursos
 }else{
-    Console.Write("Fêmeas: Não possui registro\n");
+    Console.Write("Fêmeas: Não possui registro\n"); // se nao tiver urso femea, ele mostra a mensagem que nao possui registro
 }
 
 int[] machos = new int[categoria.Length];
