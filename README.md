@@ -20,6 +20,6 @@ Acesse o programa através do [LINK](/ursos.zip)
 ### Caso você digite um peso igual a 0 kg, 250 kg ou um valor negativo, o programa é encerrado e exibe as seguintes informações:  
 ![Imagem 4](img/IMAGE04.png)
 
-### Após inserir os pesos e suas respectivas classificações (Macho ou Fêmea), o programa gera um Histograma mostrando as informações:  
+### Depois de exibir as informações, como a média de peso por sexo e as características do urso mais pesado, o programa apresenta um histograma.  
 ![Imagem 5](img/IMAGE05.png)
 

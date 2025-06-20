@@ -104,6 +104,9 @@ histograma("Ursos Machos", machos, categoria);
 histograma("Ursos Fêmeas", femeas, categoria);
 histograma("Ursos (todos)", total, categoria);
 
+Console.WriteLine("Aperte em qualquer tecla para encerrar o programa!");
+Console.ReadKey();
+
 int obterIndiceCategoria(double peso, (int min, int max)[] intervalos)
 {
     for (int i = 0; i < intervalos.Length; i++)
