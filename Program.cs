@@ -66,10 +66,14 @@ Console.Clear();
 Console.WriteLine($"\nTotal de Ursos Registrados: {ursos.Count}\n");//conta o total de indices dentro da lista e mostra a quantidade de ursos registrados
 
 Console.WriteLine("Informações do urso mais pesado:");
-Console.Write($"Sexo: {sexoMaiorPeso} | ");//mostra o sexo do urso mais pesado registrado
-Console.Write($"Peso: {maiorPeso}Kg\n");//mostra o peso do urso mais pesado registrado
+if (sexoMaiorPeso == ' '){
+   Console.WriteLine("Sexo: Não possui registro | Peso: Não possui registro\n");//mostra a mensagem caso nenhum urso tenha sido registrado
+}
+else{
+    Console.Write($"Sexo: {sexoMaiorPeso} | Peso: {maiorPeso}Kg\n");//mostra o sexo e o peso do urso mais pesado registrado
+}
 
-Console.WriteLine("\nMédia de peso por sexo:");
+Console.WriteLine("Média de peso por sexo:");
 
 if (contM > 0){ //se tiver mais de um urso macho registrado ele faz a média
     Console.Write($"Machos: {(somaM / contM):F2} kg | "); //pega a soma de todos os pesos e divide pela quantidade de ursos
@@ -78,9 +82,9 @@ if (contM > 0){ //se tiver mais de um urso macho registrado ele faz a média
 }
 
 if (contF > 0){ //se tiver mais de um urso femea registrado ele faz a média
-    Console.WriteLine($"Fêmeas: {(somaF / contF):F2} kg\n"); //pega a soma de todos os pesos e divide pela quantidade de ursos
+    Console.WriteLine($"Fêmeas: {(somaF / contF):F2} kg\n");//pega a soma de todos os pesos e divide pela quantidade de ursos
 }else{
-    Console.Write("Fêmeas: Não possui registro\n"); // se nao tiver urso femea, ele mostra a mensagem que nao possui registro
+    Console.WriteLine("Fêmeas: Não possui registro\n"); // e nao tiver urso femea, ele mostra a mensagem que nao possui registro
 }
 
 int[] machos = new int[categoria.Length];
@@ -90,33 +94,90 @@ int[] total = new int[categoria.Length];
 foreach (var urso in ursos)
 {
     int indice = obterIndiceCategoria(urso.peso, intervalosPeso);
-    if (indice >= 0)
-    {
+    if (indice >= 0){
         total[indice]++;
-        if (urso.sexo == 'M')
+        if (urso.sexo == 'M'){
             machos[indice]++;
-        else
+        }
+        else{
             femeas[indice]++;
+        }
+            
     }
 }
 
+gerarTabelaDistribuicao(machos, femeas, total, categoria);
 histograma("Ursos Machos", machos, categoria);
 histograma("Ursos Fêmeas", femeas, categoria);
 histograma("Ursos (todos)", total, categoria);
 
-Console.WriteLine("Aperte em qualquer tecla para encerrar o programa!");
+Console.WriteLine("\nAperte em qualquer tecla para encerrar o programa!");
 Console.ReadKey();
 
+//função que mostra uma tabela com a distribuição de ursos por categoria de peso
+void gerarTabelaDistribuicao(int[] machos, int[] femeas, int[] total, string[] categorias)
+{
+    //soma a quantidade total de ursos, machos e fêmeas
+    int totalUrsos = total.Sum();
+    int totalMachos = machos.Sum();
+    int totalFemeas = femeas.Sum();
+
+    //monta o a primeira linha de cabeçalho e a linha final da tabela com os totais e as porcentagens de 100%
+    string cabecalho = "| " + "Categoria".PadRight(13) + "Ursos".PadRight(10) + "Ursos(%)".PadRight(12) + "Machos".PadRight(10) + "Machos(%)".PadRight(12)  + "Fêmeas".PadRight(10) + "Fêmeas(%)".PadLeft(10) + " |";
+    string totalLinha = "| " + "Total".PadRight(9) + " " + totalUrsos.ToString().PadLeft(6) + " " + "100%".PadLeft(12) + " " + totalMachos.ToString().PadLeft(9) + " " + "100%".PadLeft(12) + " " + totalFemeas.ToString().PadLeft(8) + " " + "100%".PadLeft(12) + "    |";
+    
+    Console.WriteLine("+------------------- Tabela de Distribuição de Frequências ---------------------+");
+    Console.WriteLine(cabecalho);
+
+    for (int i = 0; i < categorias.Length; i++)
+    {
+       double percTotal, percMachos, percFemeas;
+
+        //calcula as procentagens só se tiver valores pra evitar divisão por zero
+        if (totalUrsos > 0)
+        {
+            percTotal = (double)total[i] / totalUrsos * 100;
+        }
+        else
+        {
+            percTotal = 0;
+        }
+
+        if (totalMachos > 0){
+            percMachos = (double)machos[i] / totalMachos * 100;
+        }else{
+            percMachos = 0;
+        }
+
+        if (totalFemeas > 0){
+            percFemeas = (double)femeas[i] / totalFemeas * 100;
+        }else{
+            percFemeas = 0;
+        }
+
+        //monta cada linha de registro das informaçõeos na tabela
+        string linha = "| " + categorias[i].PadRight(11) + " " + total[i].ToString().PadLeft(4) + " " + $"{percTotal:F1}%".PadLeft(12) + " " + machos[i].ToString().PadLeft(9) + " " + $"{percMachos:F1}%".PadLeft(12) + " " + femeas[i].ToString().PadLeft(8) + " " + $"{percFemeas:F1}%".PadLeft(12) + "    |";
+        Console.WriteLine(linha);
+    }
+
+    Console.WriteLine(totalLinha);
+    Console.WriteLine("+-------------------------------------------------------------------------------+");
+}
+
+//função que recebe um peso e retorna o índice que representa em quual intervalo peso pertence
 int obterIndiceCategoria(double peso, (int min, int max)[] intervalos)
 {
+    //percorre o array de intervalo de peso e retorna o indice igual ao intervalo onde o peso se encaixa
     for (int i = 0; i < intervalos.Length; i++)
         if (peso >= intervalos[i].min && peso <= intervalos[i].max)
             return i;
     return -1;
 }
 
+// função que acha a categoria do urso com base no peso informado e o intervalo que ela pertence
 string saberCategoria(double peso, (int min, int max)[] intervalos, string[] categorias)
 {
+    //percorre a array e retorna a categoria correspondente ao peso
     for (int i = 0; i < intervalos.Length; i++)
     {
         if (peso >= intervalos[i].min && peso <= intervalos[i].max)
@@ -127,10 +188,12 @@ string saberCategoria(double peso, (int min, int max)[] intervalos, string[] cat
     return "Sem Categoria";
 }
 
+//função que mostra um histograma com barras representando a quantidade de ursos por categoria
 void histograma(string titulo, int[] dados, string[] categorias)
 {
     Console.WriteLine($"\n--- {titulo} ---");
     Console.WriteLine("    +...10...20...30...40...50...60...70...80...90..100");
     for (int i = 0; i < categorias.Length; i++)
+        //monta a linha da categoria com uma barra de '*' proporcional ao valor
         Console.WriteLine($"{categorias[i],-4}|{new string('*', dados[i])}");
 }
