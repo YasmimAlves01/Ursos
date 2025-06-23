@@ -4,7 +4,7 @@
 Um programa para análise de dados coletados de ursos selvagens. Para cada urso, receba o peso (kg) e o sexo (M/F). Finalize a coleta ao receber um peso igual a zero, negativo ou acima de 250 kg.
 
 ## Download  
-Acesse o programa através do [LINK](/ursos.zip)
+Acesse o programa através do [LINK](/Ursos.zip)
 
 ## Passo a Passo
 
